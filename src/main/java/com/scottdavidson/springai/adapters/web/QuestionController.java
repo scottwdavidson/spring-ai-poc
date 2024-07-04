@@ -24,7 +24,14 @@ public class QuestionController {
     }
 
     @PostMapping("/capital")
-    public Answer askQuestion(@RequestBody StateOrCountry stateOrCountry){
+    public Answer getCapital(@RequestBody StateOrCountry stateOrCountry){
         return this.askQuestionQuery.getCapital(stateOrCountry);
     }
+
+    @PostMapping("/capital-extended")
+    public Answer getCapitalExtended(@RequestBody StateOrCountry stateOrCountry){
+        return this.askQuestionQuery.getCapitalWithExtendedInformation(stateOrCountry);
+    }
+
+
 }

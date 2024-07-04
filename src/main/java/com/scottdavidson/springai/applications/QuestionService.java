@@ -26,6 +26,9 @@ public class QuestionService implements AskQuestionQuery {
     @Value("classpath:templates/get-capital-prompt.st")
     private Resource getCapitalPrompt;
 
+    @Value("classpath:templates/get-capital-prompt-extended-info.st")
+    private Resource getCapitalPromptExtendedInfo;
+
     @Autowired
     private ResourceLoader resourceLoader;
 
@@ -35,8 +38,17 @@ public class QuestionService implements AskQuestionQuery {
     }
 
     public Answer getCapital(StateOrCountry stateOrCountry){
-        
+
         PromptTemplate promptTemplate = new PromptTemplate(getCapitalPrompt);
+        Prompt prompt = promptTemplate.create(Map.of("stateOrCountry", stateOrCountry));
+        ChatResponse response = this.chatClient.call(prompt);
+
+        return new Answer(response.getResult().getOutput().getContent());
+    }
+
+    public Answer getCapitalWithExtendedInformation(StateOrCountry stateOrCountry){
+
+        PromptTemplate promptTemplate = new PromptTemplate(getCapitalPromptExtendedInfo);
         Prompt prompt = promptTemplate.create(Map.of("stateOrCountry", stateOrCountry));
         ChatResponse response = this.chatClient.call(prompt);
 
