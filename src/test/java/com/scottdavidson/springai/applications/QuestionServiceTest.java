@@ -1,5 +1,7 @@
 package com.scottdavidson.springai.applications;
 
+import com.scottdavidson.springai.domain.Answer;
+import com.scottdavidson.springai.domain.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -17,9 +19,9 @@ class QuestionServiceTest {
     @org.junit.jupiter.api.Test
     void askQuestion() {
 
-        String answer = questionService.askQuestion(DAD_JOKE_PROMPT);
+        Answer answer = questionService.askQuestion(new Question(DAD_JOKE_PROMPT));
         System.out.println("Got the answer ... ");
-        System.out.println(answer);
+        System.out.println(answer.answer());
 
     }
 }
